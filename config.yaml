@@ -1,0 +1,43 @@
+# Infrastructure Health Monitor - Configuration
+# -----------------------------------------------
+# Adjust thresholds, monitored hosts, and intervals to match your
+# environment. Values here override built-in defaults.
+
+thresholds:
+  cpu_percent: 90.0          # Trigger alert above this CPU usage (%)
+  memory_percent: 85.0       # Trigger alert above this memory usage (%)
+  disk_percent: 90.0         # Trigger alert above this disk usage (%)
+  network_error_rate: 0.01   # Fraction of packets with errors (0.01 = 1%)
+  disk_latency_ms: 100.0     # Disk I/O latency threshold (ms)
+  ping_timeout_ms: 1000.0    # Ping considered failed above this (ms)
+  dns_timeout_ms: 2000.0     # DNS resolution timeout (ms)
+  tcp_connect_timeout_s: 5.0 # TCP connect probe timeout (seconds)
+
+# Hosts to probe with TCP connect tests
+monitored_hosts:
+  - host: 8.8.8.8
+    port: 53
+    label: "Google DNS"
+  - host: 1.1.1.1
+    port: 53
+    label: "Cloudflare DNS"
+  - host: 208.67.222.222
+    port: 53
+    label: "OpenDNS"
+
+# Domains to resolve for DNS health checks
+dns_check_domains:
+  - google.com
+  - cloudflare.com
+  - github.com
+
+# Hosts to ping for latency measurement
+ping_targets:
+  - 8.8.8.8
+  - 1.1.1.1
+
+# How often to re-run checks (seconds)
+check_interval_seconds: 5
+
+# Dashboard auto-refresh interval (seconds)
+dashboard_refresh_seconds: 5
